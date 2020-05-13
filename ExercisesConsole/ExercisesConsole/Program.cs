@@ -26,9 +26,68 @@ namespace ExercisesConsole
                 new Person(12,"Gail","Dawson", 19 ),
             };
 
-            foreach (var it in people)
+            //foreach (var it in people)
+            //{
+            //    Console.WriteLine(it.ToString());
+            //}
+
+            //var result = from ppl in people
+            //             where ppl.Age < 20
+            //             select new { Name = ppl.FirstName, LastName = ppl.LastName };
+
+            //foreach (var it in people)
+            //{
+            //    Console.WriteLine($"FirstName {it.Name }, LastName {it.LastName}");
+            //}
+
+            var purchases = new List<Purchase>()
+            {
+                new Purchase("Carrots", 12,1),
+                new Purchase("Cauliflower", 2,1),
+                new Purchase("Cauliflower", 2,1),
+                new Purchase("Apples", 2,3),
+                new Purchase("Apples", 7,1),
+                new Purchase("Avocados", 2,4),
+                new Purchase("Avocados", 2,1),
+                new Purchase("Avocados", 3,1),
+                new Purchase("Avocados", 2,4),
+                new Purchase("Avocados", 7,1),
+                new Purchase("Avocados", 2,1)
+            };
+
+            //writeline person list
+
+            //write linq statement for people with last name that starts with the letter D, writeline id of them
+            var dRes = from ppl in people
+                       where ppl.LastName[0] == 'D'
+                       select ppl;
+            foreach (var it in dRes)
             {
                 Console.WriteLine(it.ToString());
+            }
+            Console.WriteLine();
+            //Write linq statement for first Person Older Than 50 In Descending Alphabetical  Order by First Name
+            var oldRes = from ppl in people
+                       where ppl.Age > 50
+                       orderby ppl.FirstName descending
+                       select ppl;
+            foreach (var it in oldRes)
+            {
+                Console.WriteLine(it.ToString());
+            }
+            Console.WriteLine();
+
+            //Write person ages that is "dublicate"
+            var dupRes = from ppl in people
+                         group ppl by ppl.Age into ageGroups
+                         select ageGroups;
+            foreach (var it in dupRes)
+            {
+                if (it.Count() < 2) continue;
+                foreach(var pers in it)
+                {
+                    Console.WriteLine(pers.ToString());
+                }
             }
 
             Console.ReadLine();
