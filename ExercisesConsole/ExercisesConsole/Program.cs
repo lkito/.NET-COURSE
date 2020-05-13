@@ -80,10 +80,10 @@ namespace ExercisesConsole
             //Write person ages that is "dublicate"
             var dupRes = from ppl in people
                          group ppl by ppl.Age into ageGroups
+                         where ageGroups.Count() > 1
                          select ageGroups;
             foreach (var it in dupRes)
             {
-                if (it.Count() < 2) continue;
                 foreach(var pers in it)
                 {
                     Console.WriteLine(pers.ToString());
