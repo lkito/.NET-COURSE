@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DNetFinalProject.Models.CurrencyRegister>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+ 
+<div class="form-group form-inline">
+    <label>Sort by order number: | </label>
+    @{
+        if (ViewBag.sortType == "descending")
+        {
+            @Html.ActionLink("Ascending", "Index", new { sortType = "ascending" })
+            <label> | Descending</label>
+        }
+        else
+        {
+            <label>Ascending | </label>
+            @Html.ActionLink("Descending", "Index", new { sortType = "descending" })
+        }
+    }
+    <label> | </label>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyLatinName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderNum)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CurrencyCode)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CurrencyName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CurrencyLatinName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.OrderNum)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.CurrencyCode }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.CurrencyCode })
+    </td>
+</tr>
+    }
+
+</table>
