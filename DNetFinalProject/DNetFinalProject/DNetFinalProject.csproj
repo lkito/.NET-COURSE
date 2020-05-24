@@ -154,6 +154,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\TransactionCreateScript.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -183,9 +184,7 @@
     <Content Include="Views\CurrencyRates\Delete.cshtml" />
     <Content Include="Views\CurrencyRates\Index.cshtml" />
     <Content Include="Views\TransactionHistory\Create.cshtml" />
-    <Content Include="Views\TransactionHistory\Delete.cshtml" />
     <Content Include="Views\TransactionHistory\Details.cshtml" />
-    <Content Include="Views\TransactionHistory\Edit.cshtml" />
     <Content Include="Views\TransactionHistory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@ namespace DNetFinalProject.Controllers
 {
     public class TransactionHistoryController : Controller
     {
+        private RateEntityModel rateDB = new RateEntityModel();
         private TransactionEntityModel db = new TransactionEntityModel();
 
         // GET: TransactionHistory
@@ -38,6 +39,8 @@ namespace DNetFinalProject.Controllers
         // GET: TransactionHistory/Create
         public ActionResult Create()
         {
+            // Get every rated currency code
+            ViewBag.existingCodes = new SelectList(rateDB.CurrencyRates.Select(entry => entry.CurrencyCode).ToList());
             return View();
         }
 
@@ -46,8 +49,15 @@ namespace DNetFinalProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IncomingCurrencyCode,OutgoingCurrencyCode,IncomingAmount,OutgoingAmount,TransactionDate,Comment")] TransactionHistory transactionHistory)
+        public ActionResult Create([Bind(Include = "ID,IncomingCurrencyCode,OutgoingCurrencyCode,IncomingAmount,Comment")] TransactionHistory transactionHistory)
         {
+            ViewBag.existingCodes = new SelectList(rateDB.CurrencyRates.Select(entry => entry.CurrencyCode).ToList());
+            if (transactionHistory.Comment == null) transactionHistory.Comment = "";
+            transactionHistory.OutgoingAmount = (int)((decimal)transactionHistory.IncomingAmount
+                * rateDB.CurrencyRates.First(entry => entry.CurrencyCode == transactionHistory.IncomingCurrencyCode).SellRateGEL 
+                / rateDB.CurrencyRates.First(entry => entry.CurrencyCode == transactionHistory.OutgoingCurrencyCode).BuyRateGEL);
+            transactionHistory.TransactionDate = DateTime.Now;
+            var bla = transactionHistory;
             if (ModelState.IsValid)
             {
                 db.TransactionHistories.Add(transactionHistory);
@@ -56,63 +66,6 @@ namespace DNetFinalProject.Controllers
             }
 
             return View(transactionHistory);
-        }
-
-        // GET: TransactionHistory/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TransactionHistory transactionHistory = db.TransactionHistories.Find(id);
-            if (transactionHistory == null)
-            {
-                return HttpNotFound();
-            }
-            return View(transactionHistory);
-        }
-
-        // POST: TransactionHistory/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IncomingCurrencyCode,OutgoingCurrencyCode,IncomingAmount,OutgoingAmount,TransactionDate,Comment")] TransactionHistory transactionHistory)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(transactionHistory).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(transactionHistory);
-        }
-
-        // GET: TransactionHistory/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TransactionHistory transactionHistory = db.TransactionHistories.Find(id);
-            if (transactionHistory == null)
-            {
-                return HttpNotFound();
-            }
-            return View(transactionHistory);
-        }
-
-        // POST: TransactionHistory/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            TransactionHistory transactionHistory = db.TransactionHistories.Find(id);
-            db.TransactionHistories.Remove(transactionHistory);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

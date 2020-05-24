@@ -12,12 +12,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.IncomingCurrencyCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OutgoingCurrencyCode)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.IncomingAmount)
         </th>
         <th>
@@ -26,36 +20,22 @@
         <th>
             @Html.DisplayNameFor(model => model.TransactionDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comment)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.IncomingCurrencyCode)
+            @Html.DisplayName(item.IncomingAmount + " " + item.IncomingCurrencyCode)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.OutgoingCurrencyCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IncomingAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OutgoingAmount)
+            @Html.DisplayName(item.OutgoingAmount + " " + item.OutgoingCurrencyCode)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TransactionDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Comment)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Details", "Details", new { id=item.ID })
         </td>
     </tr>
 }
