@@ -1,10 +1,10 @@
-﻿@model DNetFinalProject.Models.CurrencyRegister
+﻿@model DNetFinalProject.Models.CurrencyRate
 
 @{
-    ViewBag.Title = "Deleting Currency";
+    ViewBag.Title = "Delete";
 }
 
-<h2>Delete Currency</h2>
+<h2>Deleting Currency Rate</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -19,27 +19,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CurrencyName)
+            @Html.DisplayNameFor(model => model.BuyRateGEL)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CurrencyName)
+            @Html.DisplayFor(model => model.BuyRateGEL)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CurrencyLatinName)
+            @Html.DisplayNameFor(model => model.SellRateGEL)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CurrencyLatinName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderNum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderNum)
+            @Html.DisplayFor(model => model.SellRateGEL)
         </dd>
 
     </dl>

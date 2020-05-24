@@ -128,12 +128,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CurrencyRatesController.cs" />
     <Compile Include="Controllers\CurrencyRegisterController.cs" />
+    <Compile Include="Controllers\TransactionHistoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CurrencyRate.cs" />
     <Compile Include="Models\CurrencyRegister.cs" />
-    <Compile Include="Models\Model1.cs" />
+    <Compile Include="Models\TransactionEntityModel.cs" />
+    <Compile Include="Models\RateEntityModel.cs" />
+    <Compile Include="Models\RegisterEntityModel.cs" />
+    <Compile Include="Models\TransactionHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +179,14 @@
     <Content Include="Views\CurrencyRegister\Delete.cshtml" />
     <Content Include="Views\CurrencyRegister\Edit.cshtml" />
     <Content Include="Views\CurrencyRegister\Index.cshtml" />
+    <Content Include="Views\CurrencyRates\Create.cshtml" />
+    <Content Include="Views\CurrencyRates\Delete.cshtml" />
+    <Content Include="Views\CurrencyRates\Index.cshtml" />
+    <Content Include="Views\TransactionHistory\Create.cshtml" />
+    <Content Include="Views\TransactionHistory\Delete.cshtml" />
+    <Content Include="Views\TransactionHistory\Details.cshtml" />
+    <Content Include="Views\TransactionHistory\Edit.cshtml" />
+    <Content Include="Views\TransactionHistory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

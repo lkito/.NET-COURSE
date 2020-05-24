@@ -12,7 +12,7 @@ namespace DNetFinalProject.Controllers
 {
     public class CurrencyRegisterController : Controller
     {
-        private Model1 db = new Model1();
+        private RegisterEntityModel db = new RegisterEntityModel();
 
         // GET: CurrencyRegister
         public ActionResult Index(string sortType="ascending")

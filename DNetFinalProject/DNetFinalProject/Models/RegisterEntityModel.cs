@@ -5,9 +5,9 @@ namespace DNetFinalProject.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class Model1 : DbContext
+    public partial class RegisterEntityModel : DbContext
     {
-        public Model1()
+        public RegisterEntityModel()
             : base("name=FinalProjectCon")
         {
         }
