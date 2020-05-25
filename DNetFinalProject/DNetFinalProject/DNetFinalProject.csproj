@@ -178,11 +178,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\CurrencyRegister\Create.cshtml" />
-    <Content Include="Views\CurrencyRegister\Delete.cshtml" />
     <Content Include="Views\CurrencyRegister\Edit.cshtml" />
     <Content Include="Views\CurrencyRegister\Index.cshtml" />
     <Content Include="Views\CurrencyRates\Create.cshtml" />
-    <Content Include="Views\CurrencyRates\Delete.cshtml" />
     <Content Include="Views\CurrencyRates\Index.cshtml" />
     <Content Include="Views\TransactionHistory\Create.cshtml" />
     <Content Include="Views\TransactionHistory\Details.cshtml" />

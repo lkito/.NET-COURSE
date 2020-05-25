@@ -97,39 +97,6 @@ namespace DNetFinalProject.Controllers
             return View(currencyRegister);
         }
 
-        // GET: CurrencyRegister/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CurrencyRegister currencyRegister = db.CurrencyRegisters.Find(id);
-            if (currencyRegister == null)
-            {
-                return HttpNotFound();
-            }
-            return View(currencyRegister);
-        }
-
-        // POST: CurrencyRegister/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            CurrencyRate currencyRate = rateDB.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == id);
-            // Remove corresponding rate from the database
-            if (currencyRate != null)
-            {
-                rateDB.CurrencyRates.Remove(currencyRate);
-                rateDB.SaveChanges();
-            }
-            CurrencyRegister currencyRegister = db.CurrencyRegisters.Find(id);
-            db.CurrencyRegisters.Remove(currencyRegister);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

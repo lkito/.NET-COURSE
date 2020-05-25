@@ -66,32 +66,6 @@ namespace DNetFinalProject.Controllers
             return View(currencyRate);
         }
 
-        // GET: CurrencyRates/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CurrencyRate currencyRate = db.CurrencyRates.Find(id);
-            if (currencyRate == null)
-            {
-                return HttpNotFound();
-            }
-            return View(currencyRate);
-        }
-
-        // POST: CurrencyRates/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            CurrencyRate currencyRate = db.CurrencyRates.Find(id);
-            db.CurrencyRates.Remove(currencyRate);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

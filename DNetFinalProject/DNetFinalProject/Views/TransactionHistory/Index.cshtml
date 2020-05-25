@@ -5,7 +5,30 @@
 }
 
 <h2>Reports</h2>
+@using (Html.BeginForm("Index", "TransactionHistory", FormMethod.Get, new { @class = "form-group" }))
+{
+    @Html.AntiForgeryToken()
+<div class="row">
+    <div class="form-group col-md-3">
+        <div>
+            @Html.Label("Find suspicious transactions?", htmlAttributes: new { @class = "control-label" })
+            @Html.CheckBox("displaySuspect", (bool)ViewBag.displaySuspect, new { @class = "form-check" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2">
+            @Html.Label("Sort by time: ", htmlAttributes: new { @class = "control-label off" })
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownList("curTime", (SelectList)ViewBag.timeSelect, "Select Time", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group col-xs-6">
+        <input type="submit" value="Search Transactions" class="btn btn-default" />
+    </div>
 
+</div>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -23,21 +46,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayName(item.IncomingAmount + " " + item.IncomingCurrencyCode)
-        </td>
-        <td>
-            @Html.DisplayName(item.OutgoingAmount + " " + item.OutgoingCurrencyCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionDate)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayName(item.IncomingAmount + " " + item.IncomingCurrencyCode)
+            </td>
+            <td>
+                @Html.DisplayName(item.OutgoingAmount + " " + item.OutgoingCurrencyCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionDate)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
