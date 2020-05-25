@@ -25,6 +25,7 @@ namespace DNetFinalProject.Models
 
         public DateTime TransactionDate { get; set; }
 
+        [StringLength(4000)]
         public string Comment { get; set; }
     }
 }

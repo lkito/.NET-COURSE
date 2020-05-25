@@ -21,6 +21,7 @@ namespace DNetFinalProject.Models
         [StringLength(20)]
         public string CurrencyLatinName { get; set; }
 
+        [Range(0, int.MaxValue, ErrorMessage = "Only non-negative numbers allowed")]
         public int OrderNum { get; set; }
     }
 }

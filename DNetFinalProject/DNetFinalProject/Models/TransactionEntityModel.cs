@@ -26,7 +26,7 @@ namespace DNetFinalProject.Models
 
             modelBuilder.Entity<TransactionHistory>()
                 .Property(e => e.Comment)
-                .IsUnicode(false);
+                .IsUnicode(true);
         }
     }
 }

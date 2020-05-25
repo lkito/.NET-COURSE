@@ -14,8 +14,10 @@ namespace DNetFinalProject.Models
         [StringLength(3)]
         public string CurrencyCode { get; set; }
 
+        [Range(0.000001, double.MaxValue, ErrorMessage = "Only positive numbers allowed")]
         public decimal BuyRateGEL { get; set; }
 
+        [Range(0.000001, double.MaxValue, ErrorMessage = "Only positive numbers allowed")]
         public decimal SellRateGEL { get; set; }
     }
 }

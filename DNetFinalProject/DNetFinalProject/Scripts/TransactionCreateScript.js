@@ -6,30 +6,36 @@ const outAmountElem = document.getElementById('OutgoingAmount');
 var incCodeSelected = false;
 var outCodeSelected = false; 
 
-console.log(outAmountElem);
-var rates = {
-    'GBP': 0.5,
-    'USD': 0.8,
-    'RBU': 100
+function fieldChange() {
+    if (incCodeSelected && outCodeSelected && incAmountElem.value != '' && incAmountElem.value != 0) {
+        $.ajax({
+            type: 'GET',
+            url: 'GetRateByCode',
+            data: {
+                'incomingCode': incCodeElem.value,
+                'outgoingCode': outCodeElem.value
+            },
+            dataType: 'json', // added data type
+            success: function (res) {
+                outAmountElem.value = incAmountElem.value * res.BuyRateGEL / res.SellRateGEL;
+            }
+        });
+    } else {
+        outAmountElem.value = 0;
+    }
 };
 
-function updateAmount() {
-    if (incCodeSelected && outCodeSelected) {
-        outAmountElem.value = incAmountElem.value * rates[outCodeElem.value] / rates[incCodeElem.value];
-    }
-}
-
-incCodeElem.addEventListener('change', function () {
+$(incCodeElem).change(function () {
     incCodeSelected = !(incCodeElem.value == '');
-    updateAmount();
+    fieldChange();
 });
-outCodeElem.addEventListener('change', function () {
+$(outCodeElem).change(function () {
     outCodeSelected = !(outCodeElem.value == '');
-    updateAmount();
+    fieldChange();
 });
-incAmountElem.addEventListener('keyup', function () {
-    updateAmount();
+$(incAmountElem).change(function () {
+    fieldChange();
 });
-incAmountElem.addEventListener('change', function () {
-    updateAmount();
+$(incAmountElem).keyup(function () {
+    fieldChange();
 });

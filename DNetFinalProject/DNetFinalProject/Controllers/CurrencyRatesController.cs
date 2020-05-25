@@ -21,9 +21,20 @@ namespace DNetFinalProject.Controllers
             return View(db.CurrencyRates.ToList());
         }
 
+        // GET: CurrencyRate
+        public JsonResult GetCurrencyRate(string currencyCode)
+        {
+            CurrencyRate rate = db.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == currencyCode);
+            if (rate == null) {
+                rate = new CurrencyRate();
+            }
+            return Json(new { rate.BuyRateGEL, rate.SellRateGEL }, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: CurrencyRates/Create
         public ActionResult Create(int id = -1)
         {
+            // This is needed for when user clicks "edit" button
             CurrencyRate cur = db.CurrencyRates.Find(id); // Get entry, if id was passed
             // Get every currency code
             ViewBag.existingCodes = new SelectList(registerDB.CurrencyRegisters.Select(entry => entry.CurrencyCode).ToList());
@@ -35,9 +46,9 @@ namespace DNetFinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CurrencyCode,BuyRateGEL,SellRateGEL")] CurrencyRate currencyRate)
         {
+            CurrencyRate cr = db.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == currencyRate.CurrencyCode);
             if (ModelState.IsValid)
             {
-                CurrencyRate cr = db.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == currencyRate.CurrencyCode);
                 if (cr != null)
                 {
                     cr.BuyRateGEL = currencyRate.BuyRateGEL;

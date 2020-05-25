@@ -22,7 +22,7 @@ namespace DNetFinalProject.Models
 
             modelBuilder.Entity<CurrencyRegister>()
                 .Property(e => e.CurrencyName)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             modelBuilder.Entity<CurrencyRegister>()
                 .Property(e => e.CurrencyLatinName)

@@ -36,13 +36,17 @@ namespace DNetFinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CurrencyCode,CurrencyName,CurrencyLatinName,OrderNum")] CurrencyRegister currencyRegister)
         {
+            // Make sure that no characters are unicode
+            if (currencyRegister.CurrencyCode.Any(c => c > 127) || currencyRegister.CurrencyLatinName.Any(c => c > 127))
+            {
+                return View(currencyRegister);
+            }
             currencyRegister.CurrencyCode = currencyRegister.CurrencyCode.ToUpper();
             if(db.CurrencyRegisters.Find(currencyRegister.CurrencyCode) != null)
             {
                 TempData["displayExistsWarning"] = true;
                 return RedirectToAction("Edit/" + currencyRegister.CurrencyCode);
             }
-            currencyRegister.OrderNum = Math.Max(currencyRegister.OrderNum, 0); // Don't allow negative values
             if (ModelState.IsValid)
             {
                 db.CurrencyRegisters.Add(currencyRegister);
@@ -78,6 +82,11 @@ namespace DNetFinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CurrencyCode,CurrencyName,CurrencyLatinName,OrderNum")] CurrencyRegister currencyRegister)
         {
+            // Make sure that no characters are unicode
+            if (currencyRegister.CurrencyCode.Any(c => c > 127) || currencyRegister.CurrencyLatinName.Any(c => c > 127))
+            {
+                return View(currencyRegister);
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(currencyRegister).State = EntityState.Modified;
