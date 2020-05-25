@@ -13,6 +13,7 @@
 
 <div class="form-horizontal">
     <hr />
+    @Html.HiddenFor(model => model.CurrencyCode)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @if (ViewBag.displayExistsWarning)
     {
@@ -20,14 +21,12 @@
             <label>Currency with the code you entered already exists, you can edit it here.</label>
         </div>
     }
-    <div class="form-group">
-        @Html.LabelFor(model => model.CurrencyCode, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.CurrencyCode, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.CurrencyCode, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
+    <div class="text-info">
+        <label>Edit the registry entry for the currency with code: </label>
+        @Html.DisplayFor(model => model.CurrencyCode)
+    </div>
+    <br>
     <div class="form-group">
         @Html.LabelFor(model => model.CurrencyName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

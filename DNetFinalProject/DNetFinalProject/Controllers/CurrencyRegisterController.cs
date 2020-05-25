@@ -12,6 +12,7 @@ namespace DNetFinalProject.Controllers
 {
     public class CurrencyRegisterController : Controller
     {
+        private RateEntityModel rateDB = new RateEntityModel();
         private RegisterEntityModel db = new RegisterEntityModel();
 
         // GET: CurrencyRegister
@@ -83,7 +84,7 @@ namespace DNetFinalProject.Controllers
         public ActionResult Edit([Bind(Include = "CurrencyCode,CurrencyName,CurrencyLatinName,OrderNum")] CurrencyRegister currencyRegister)
         {
             // Make sure that no characters are unicode
-            if (currencyRegister.CurrencyCode.Any(c => c > 127) || currencyRegister.CurrencyLatinName.Any(c => c > 127))
+            if (currencyRegister.CurrencyLatinName.Any(c => c > 127))
             {
                 return View(currencyRegister);
             }
@@ -116,6 +117,13 @@ namespace DNetFinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
+            CurrencyRate currencyRate = rateDB.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == id);
+            // Remove corresponding rate from the database
+            if (currencyRate != null)
+            {
+                rateDB.CurrencyRates.Remove(currencyRate);
+                rateDB.SaveChanges();
+            }
             CurrencyRegister currencyRegister = db.CurrencyRegisters.Find(id);
             db.CurrencyRegisters.Remove(currencyRegister);
             db.SaveChanges();

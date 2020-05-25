@@ -61,7 +61,8 @@ namespace DNetFinalProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            // Get every currency code
+            ViewBag.existingCodes = new SelectList(registerDB.CurrencyRegisters.Select(entry => entry.CurrencyCode).ToList());
             return View(currencyRate);
         }
 
