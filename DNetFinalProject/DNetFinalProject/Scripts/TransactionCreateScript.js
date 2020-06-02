@@ -4,8 +4,8 @@ const outCodeElem = document.getElementById('OutgoingCurrencyCode');
 const changeRateElem = document.getElementById('change_rate');
 const incAmountElem = document.getElementById('IncomingAmount');
 const outAmountElem = document.getElementById('OutgoingAmount');
-var incCodeSelected = false;
-var outCodeSelected = false; 
+var incCodeSelected = !(incCodeElem.value == '');
+var outCodeSelected = !(outCodeElem.value == '');
 function fieldChange(isChangedIncoming = true) {
     if (incCodeSelected && outCodeSelected) {
         $.ajax({

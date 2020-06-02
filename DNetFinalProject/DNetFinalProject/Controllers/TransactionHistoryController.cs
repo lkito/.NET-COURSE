@@ -115,6 +115,7 @@ namespace DNetFinalProject.Controllers
         {
             decimal buyRate = rateDB.CurrencyRates.First(entry => entry.CurrencyCode == transactionHistory.IncomingCurrencyCode).BuyRateGEL;
             decimal sellRate = rateDB.CurrencyRates.First(entry => entry.CurrencyCode == transactionHistory.OutgoingCurrencyCode).SellRateGEL;
+            // Determine outgoing amount based on incoming amount and exchange rate
             transactionHistory.OutgoingAmount = (int)(transactionHistory.IncomingAmount * buyRate / sellRate);
 
             // Get codes of rated currencies
@@ -133,8 +134,6 @@ namespace DNetFinalProject.Controllers
             }
             // Add blank comment if it's null
             if (transactionHistory.Comment == null) transactionHistory.Comment = "";
-            // Determine outgoing amount based on incoming amount and exchange rate
-            transactionHistory.OutgoingAmount = (int)(transactionHistory.IncomingAmount * buyRate / sellRate);
             transactionHistory.TransactionDate = DateTime.Now;
             if (ModelState.IsValid)
             {
