@@ -20,9 +20,11 @@ namespace DNetFinalProject.Controllers
         // GET: TransactionHistory
         public ActionResult Index(bool displaySuspect = false, string curTime="last month")
         {
+            // Pass sort types
             ViewBag.displaySuspect = displaySuspect;
             ViewBag.timeSelect = new SelectList(new List<string> { "all", "last year", "last month", "last week", "last day", "last hour" }, curTime);
             var dbAll = db.TransactionHistories.OrderByDescending(entry => entry.TransactionDate);
+            // Sort based on received sort type
             List<TransactionHistory> displayList = null;
             DateTime testDate = DateTime.Now;
             switch (curTime)
@@ -48,20 +50,22 @@ namespace DNetFinalProject.Controllers
             }
             var dbTime = dbAll.Where(entry => DateTime.Compare(entry.TransactionDate, testDate) >= 0);
             displayList = dbTime.ToList();
-            if (displaySuspect)
+            if (displaySuspect) // If user asked for suspicious transactions
             {
                 // Get rates
-                Dictionary<string, decimal> sellRates = rateDB.CurrencyRates.Select(entry => entry).ToDictionary(item => item.CurrencyCode, item => item.SellRateGEL);
+                Dictionary<string, decimal> sellRates = rateDB.CurrencyRates.Select(entry => entry)
+                    .ToDictionary(item => item.CurrencyCode, item => item.SellRateGEL);
                 var tranList = dbTime.ToList();
 
                 // Sort by amount in GEL
-                tranList.Sort((x, y) =>(y.IncomingAmount * sellRates[y.IncomingCurrencyCode]).CompareTo(x.IncomingAmount * sellRates[x.IncomingCurrencyCode]));
+                tranList.Sort((x, y) =>(y.IncomingAmount * sellRates[y.IncomingCurrencyCode])
+                    .CompareTo(x.IncomingAmount * sellRates[x.IncomingCurrencyCode]));
                 displayList = tranList.Take(3).ToList();
             }
             return View(displayList);
         }
 
-        // GET: rates
+        // Get exchange rate by passing currency codes
         public JsonResult GetRateByCode(string incomingCode, string outgoingCode)
         {
             CurrencyRate incRate = rateDB.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == incomingCode);
@@ -127,10 +131,11 @@ namespace DNetFinalProject.Controllers
             {
                 return View(transactionHistory);
             }
+            // Add blank comment if it's null
             if (transactionHistory.Comment == null) transactionHistory.Comment = "";
+            // Determine outgoing amount based on incoming amount and exchange rate
             transactionHistory.OutgoingAmount = (int)(transactionHistory.IncomingAmount * buyRate / sellRate);
             transactionHistory.TransactionDate = DateTime.Now;
-            var bla = transactionHistory;
             if (ModelState.IsValid)
             {
                 db.TransactionHistories.Add(transactionHistory);

@@ -21,7 +21,7 @@ namespace DNetFinalProject.Controllers
             return View(db.CurrencyRates.ToList());
         }
 
-        // GET: CurrencyRate
+        // Get rates by passing currency code
         public JsonResult GetCurrencyRate(string currencyCode)
         {
             CurrencyRate rate = db.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == currencyCode);
@@ -52,7 +52,7 @@ namespace DNetFinalProject.Controllers
             CurrencyRate cr = db.CurrencyRates.FirstOrDefault(entry => entry.CurrencyCode == currencyRate.CurrencyCode);
             if (ModelState.IsValid)
             {
-                if (cr != null)
+                if (cr != null) // If a rate with passed code already exists, update it
                 {
                     cr.BuyRateGEL = currencyRate.BuyRateGEL;
                     cr.SellRateGEL = currencyRate.SellRateGEL;

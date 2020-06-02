@@ -43,7 +43,7 @@ namespace DNetFinalProject.Controllers
                 return View(currencyRegister);
             }
             currencyRegister.CurrencyCode = currencyRegister.CurrencyCode.ToUpper();
-            if(db.CurrencyRegisters.Find(currencyRegister.CurrencyCode) != null)
+            if(db.CurrencyRegisters.Find(currencyRegister.CurrencyCode) != null) // If user entered an existing code, redirect to edit.
             {
                 TempData["displayExistsWarning"] = true;
                 return RedirectToAction("Edit/" + currencyRegister.CurrencyCode);

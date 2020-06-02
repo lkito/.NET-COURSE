@@ -16,15 +16,15 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-2">
-            @Html.Label("Sort by time: ", htmlAttributes: new { @class = "control-label off" })
+        <div class="col-sm-1">
+            @Html.Label("Sort: ", htmlAttributes: new { @class = "control-label off" })
         </div>
         <div class="col-md-4">
             @Html.DropDownList("curTime", (SelectList)ViewBag.timeSelect, "Select Time", new { @class = "form-control" })
         </div>
-    </div>
-    <div class="form-group col-xs-6">
-        <input type="submit" value="Search Transactions" class="btn btn-default" />
+        <div class="form-group col-xs-3">
+            <input type="submit" value="Search Transactions" class="btn btn-default" />
+        </div>
     </div>
 
 </div>
