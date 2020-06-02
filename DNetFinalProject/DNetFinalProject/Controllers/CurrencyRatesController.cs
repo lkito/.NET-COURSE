@@ -36,8 +36,11 @@ namespace DNetFinalProject.Controllers
         {
             // This is needed for when user clicks "edit" button
             CurrencyRate cur = db.CurrencyRates.Find(id); // Get entry, if id was passed
+
             // Get every currency code
-            ViewBag.existingCodes = new SelectList(registerDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
+            ViewBag.existingCodes = new SelectList((from a in registerDB.CurrencyRegisters
+                                                    orderby a.OrderNum
+                                                    select a.CurrencyCode).ToList());
             return View(cur);
         }
 
@@ -62,7 +65,9 @@ namespace DNetFinalProject.Controllers
                 return RedirectToAction("Index");
             }
             // Get every currency code
-            ViewBag.existingCodes = new SelectList(registerDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
+            ViewBag.existingCodes = new SelectList((from a in registerDB.CurrencyRegisters
+                                                    orderby a.OrderNum
+                                                    select a.CurrencyCode).ToList());
             return View(currencyRate);
         }
 

@@ -93,7 +93,14 @@ namespace DNetFinalProject.Controllers
         public ActionResult Create()
         {
             // Get every rated currency code
-            ViewBag.existingCodes = new SelectList(regDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
+            var regList = (from a in regDB.CurrencyRegisters
+                           select new { a.CurrencyCode, a.OrderNum }).ToList();
+            var rateList = (from a in rateDB.CurrencyRates
+                            select a.CurrencyCode).ToList();
+            ViewBag.existingCodes = new SelectList((from a in regList
+                                                    join b in rateList on a.CurrencyCode equals b
+                                                    orderby a.OrderNum
+                                                    select a.CurrencyCode).ToList());
             return View();
         }
 
@@ -105,13 +112,21 @@ namespace DNetFinalProject.Controllers
             decimal buyRate = rateDB.CurrencyRates.First(entry => entry.CurrencyCode == transactionHistory.IncomingCurrencyCode).BuyRateGEL;
             decimal sellRate = rateDB.CurrencyRates.First(entry => entry.CurrencyCode == transactionHistory.OutgoingCurrencyCode).SellRateGEL;
             transactionHistory.OutgoingAmount = (int)(transactionHistory.IncomingAmount * buyRate / sellRate);
+
+            // Get codes of rated currencies
+            var regList = (from a in regDB.CurrencyRegisters
+                           select new { a.CurrencyCode, a.OrderNum }).ToList();
+            var rateList = (from a in rateDB.CurrencyRates
+                            select a.CurrencyCode).ToList();
+            ViewBag.existingCodes = new SelectList((from a in regList
+                                                    join b in rateList on a.CurrencyCode equals b
+                                                    orderby a.OrderNum
+                                                    select a.CurrencyCode).ToList());
             // Make sure that no characters are unicode
             if (transactionHistory.IncomingAmount * sellRate > 3000 && transactionHistory.Comment == null)
             {
-                ViewBag.existingCodes = new SelectList(regDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
                 return View(transactionHistory);
             }
-            ViewBag.existingCodes = new SelectList(rateDB.CurrencyRates.Select(entry => entry.CurrencyCode).ToList());
             if (transactionHistory.Comment == null) transactionHistory.Comment = "";
             transactionHistory.OutgoingAmount = (int)(transactionHistory.IncomingAmount * buyRate / sellRate);
             transactionHistory.TransactionDate = DateTime.Now;
@@ -122,8 +137,6 @@ namespace DNetFinalProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.existingCodes = new SelectList(regDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
             return View(transactionHistory);
         }
 
