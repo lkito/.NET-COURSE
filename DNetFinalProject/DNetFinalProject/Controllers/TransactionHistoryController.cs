@@ -13,6 +13,7 @@ namespace DNetFinalProject.Controllers
 {
     public class TransactionHistoryController : Controller
     {
+        private RegisterEntityModel regDB = new RegisterEntityModel();
         private RateEntityModel rateDB = new RateEntityModel();
         private TransactionEntityModel db = new TransactionEntityModel();
 
@@ -92,7 +93,7 @@ namespace DNetFinalProject.Controllers
         public ActionResult Create()
         {
             // Get every rated currency code
-            ViewBag.existingCodes = new SelectList(rateDB.CurrencyRates.Select(entry => entry.CurrencyCode).ToList());
+            ViewBag.existingCodes = new SelectList(regDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
             return View();
         }
 
@@ -107,7 +108,7 @@ namespace DNetFinalProject.Controllers
             // Make sure that no characters are unicode
             if (transactionHistory.IncomingAmount * sellRate > 3000 && transactionHistory.Comment == null)
             {
-                ViewBag.existingCodes = new SelectList(rateDB.CurrencyRates.Select(entry => entry.CurrencyCode).ToList());
+                ViewBag.existingCodes = new SelectList(regDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
                 return View(transactionHistory);
             }
             ViewBag.existingCodes = new SelectList(rateDB.CurrencyRates.Select(entry => entry.CurrencyCode).ToList());
@@ -122,7 +123,7 @@ namespace DNetFinalProject.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.existingCodes = new SelectList(rateDB.CurrencyRates.Select(entry => entry.CurrencyCode).ToList());
+            ViewBag.existingCodes = new SelectList(regDB.CurrencyRegisters.OrderBy(e => e.OrderNum).Select(i => i.CurrencyCode).ToList());
             return View(transactionHistory);
         }
 
